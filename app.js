@@ -2,20 +2,21 @@ var Express = require("express");
 var app =Express();
 require('dotenv').load();
 
-var port = process.env.PORT || 3000;
+var port = process.env.PORT;
 app.set("view engine", "ejs");
 
 var bodyParser = require("body-parser");
 app.use(bodyParser.urlencoded({extended: true}));
 
-//var nodemailer = require("nodemailer");
-//require('dotenv').config();
+var nodemailer = require("nodemailer");
+require('dotenv').config();
 
 
 app.use(Express.static("public"));
 
 
 var images=[
+
 	{name: "Logo", image:"/images/pic.png"},
 	{name: "Logo", image:"/images/beforeboat.jpg"},
 	{name: "Logo", image:"/images/completedboat.jpg"},
@@ -35,7 +36,8 @@ var images=[
 	{name: "Logo", image:"/images/pic.png"},
 	{name: "Logo", image:"/images/beforeboat.jpg"},
 	{name: "Logo", image:"/images/completedboat.jpg"},
-	{name: "Logo", image:"/images/inprogressboat.jpg"}]
+	{name: "Logo", image:"/images/inprogressboat.jpg"}
+]
 
 app.get("/gallery", function(req, res){
 	res.render("gallery",{images:images});
