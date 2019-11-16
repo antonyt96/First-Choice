@@ -88,12 +88,12 @@ h2{
 }
 
 .col-lg-6 p{
-	text-align: center;
+	text-align: right;
 	width: 22em;
 }
 #idapic{
 
-	margin-left: 4em;
+	margin-left: 0em;
 	width: 75%;
 	height: 300px;
 	
