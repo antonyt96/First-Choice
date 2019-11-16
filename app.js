@@ -8,8 +8,6 @@ var bodyParser = require("body-parser");
 app.use(bodyParser.urlencoded({extended: true}));
 
 var nodemailer = require("nodemailer");
-require('dotenv').config();
-
 
 app.use(Express.static("public"));
 
