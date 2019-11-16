@@ -1,6 +1,5 @@
 var Express = require("express");
 var app =Express();
-require('dotenv').config();
 
 var port = process.env.PORT;
 app.set("view engine", "ejs");
