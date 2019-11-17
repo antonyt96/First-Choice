@@ -4,8 +4,7 @@
   "description": "data base for company pictures and emails the detailing website will receive",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node app.js"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Anthony Tejada",
   "license": "ISC",
