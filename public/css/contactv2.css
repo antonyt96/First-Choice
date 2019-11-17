@@ -98,9 +98,14 @@ h2{
 .jumboimg{
 
 
-	margin-left: 145px;
+	width: 350px;
+	margin-top: 40px;
 }
 #home-headline{
 
 	text-align: center;
+}
+.jumbo-btn{
+
+	margin-bottom: 60px;
 }
