@@ -1,6 +1,8 @@
 var Express = require("express");
 var app =Express();
 
+require('dotenv').config();
+
 var port = process.env.PORT ||3000;
 app.set("view engine", "ejs");
 
@@ -56,18 +58,19 @@ app.post("/contact", function(req, res){
 
 
 	var transporter = nodemailer.createTransport({
-	  service: 'outlook',
+	  service: 'gmail',
 	  auth: {
-	    user: process.env.LIVE_EMAIL,
-	    pass: process.env.LIVE_PASS
+	    user: process.env.GMAIL_EMAIL,
+	    pass: process.env.GMAIL_PASS
 	  		}
 	});
 
 	var mailOptions = {
 	  from: req.body.email,
-	  to: 	process.env.LIVE_EMAIL,
-	  subject: req.body.email,
-	  text: req.body.message
+	  to: 	process.env.GMAIL_EMAIL,
+	  subject: req.body.name,
+	  text: "Email: " + req.body.email + "\n" + 
+	  		"Message: " + req.body.message
 	};
 
 	transporter.sendMail(mailOptions, function(error, info){
@@ -77,6 +80,8 @@ app.post("/contact", function(req, res){
 	    console.log('Email sent: ' + info.response);
 	  }
 	});
+
+	res.redirect("/contact");
 
 
 });
