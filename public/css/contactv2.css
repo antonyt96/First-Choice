@@ -71,6 +71,10 @@ h2{
 	text-align: center;
   
 }
+h3{
+	margin-left: 45px;
+	text-align: center;
+}
 .btn{
 
 	background-color: #21a4f3;
@@ -108,4 +112,14 @@ h2{
 .jumbo-btn{
 
 	margin-bottom: 60px;
+}
+#servicesimg{
+	margin-top: 40px;
+	width: 500px;
+	height: 450px;
+}
+.card-header{
+
+	color: white;
+
 }
