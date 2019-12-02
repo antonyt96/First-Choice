@@ -1,9 +1,9 @@
 var Express = require("express");
 var app =Express();
-
-require('dotenv').config();
-
 var port = process.env.PORT ||3000;
+require('dotenv').config();
+const mongoose = require("mongoose");
+
 app.set("view engine", "ejs");
 
 var bodyParser = require("body-parser");
@@ -16,26 +16,35 @@ app.use(Express.static("public"));
 
 var images=[
 
-	{name: "Logo", image:"/images/pic.png"},
-	{name: "Logo", image:"/images/beforeboat.jpg"},
-	{name: "Logo", image:"/images/completedboat.jpg"},
-	{name: "Logo", image:"/images/inprogressboat.jpg"},
-	{name: "Logo", image:"/images/pic.png"},
-	{name: "Logo", image:"/images/beforeboat.jpg"},
-	{name: "Logo", image:"/images/completedboat.jpg"},
-	{name: "Logo", image:"/images/inprogressboat.jpg"},
-	{name: "Logo", image:"/images/completedboat.jpg"},
-	{name: "Logo", image:"/images/inprogressboat.jpg"},
-	{name: "Logo", image:"/images/pic.png"},
-	{name: "Logo", image:"/images/beforeboat.jpg"},
-	{name: "Logo", image:"/images/completedboat.jpg"},
-	{name: "Logo", image:"/images/inprogressboat.jpg"},
-	{name: "Logo", image:"/images/completedboat.jpg"},
-	{name: "Logo", image:"/images/inprogressboat.jpg"},
-	{name: "Logo", image:"/images/pic.png"},
-	{name: "Logo", image:"/images/beforeboat.jpg"},
-	{name: "Logo", image:"/images/completedboat.jpg"},
-	{name: "Logo", image:"/images/inprogressboat.jpg"}
+	{name: "blueboat", image:"/images/beforeboat.jpg"},
+	{name: "blueboathalf", image:"/images/blueboat_inprogress.JPEG"},
+	{name: "whiteboatdone", image:"/images/completedboat.jpg"},
+	{name: "lightgreenhalf", image:"/images/inprogressboat.jpg"},
+	{name: "beforeblackheadlight", image:"/images/beforeHeadlight.jpg"},
+	{name: "afterheadlightblackcar", image:"/images/afterheadlight.jpg"},
+	{name: "darkgreendone", image:"/images/darkgreen_finished.jpeg"},
+	{name: "redcarbefore", image:"/images/red_car_before.JPG"},
+	{name: "redfrontafter", image:"/images/red_front_after.JPG"},
+	{name: "redbackafter", image:"/images/redcar_back_after.JPG"},
+	{name: "under1", image:"/images/undersideboat.jpg"},
+	{name: "under2", image:"/images/undersideboat2.JPG"},
+	{name: "under3", image:"/images/undersideboat3.JPG"},
+	{name: "under4", image:"/images/undersideboat4.JPG"},
+	{name: "volkb4", image:"/images/volk_before_headlight.JPG"},
+	{name: "volkafter", image:"/images/volk_after_headlight.JPG"},
+	{name: "whitebefore1", image:"/images/whiteboat_leftside_before.JPG"},
+	{name: "whitebefore2", image:"/images/whiteboat_leftside_before2.JPG"},
+	{name: "whiteafter1", image:"/images/whiteboat_leftside_after.JPG"},
+	{name: "whiteafter2", image:"/images/whiteboat_leftside_after2.JPG"},
+	{name: "boatseatclean", image:"/images/boatseat_after.JPG"}
+	
+]
+
+var services=[
+
+	
+
+
 ]
 
 app.get("/gallery", function(req, res){
