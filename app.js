@@ -1,16 +1,30 @@
 var Express = require("express");
 var app =Express();
 var port = process.env.PORT ||3000;
+
 require('dotenv').config();
+
 const mongoose = require("mongoose");
+mongoose.connect('mongodb://localhost/testimonials', {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+});
+const Schema = mongoose.Schema;
+const ObjectId = Schema.ObjectId;
+ 
+const testiSchema = new Schema({
+ 
+  entity: String,
+  text: String,
+
+});
+
+const tModel = mongoose.model('tModel', testiSchema);
 
 app.set("view engine", "ejs");
-
 var bodyParser = require("body-parser");
 app.use(bodyParser.urlencoded({extended: true}));
-
 var nodemailer = require("nodemailer");
-
 app.use(Express.static("public"));
 
 
@@ -40,22 +54,39 @@ var images=[
 	
 ]
 
-var services=[
-
-	
-
-
-]
 
 app.get("/gallery", function(req, res){
 	res.render("gallery",{images:images});
 });
 
 app.get("/", function(req, res){
+	
+	tModel.find({}, function(err, test){
 
-		res.render("home");
+		if (err){
+			console.log("ERROR!");
+		} else {
+
+			res.render("home", {testimonials:test})
+		}
+
+	});
 
 });
+// app.get("/home", function(req, res){
+	
+// 	tModel.find({}, function(err, test){
+
+// 		if (err){
+// 			console.log("ERROR!");
+// 		} else {
+
+// 			res.render("home", {testimonials:testimonials})
+// 		}
+
+// 	});
+
+// });
 app.get("/services", function(req, res){
 
 		res.render("services");
@@ -99,6 +130,25 @@ app.post("/contact", function(req, res){
 	res.redirect("/contact");
 
 
+});
+
+app.post("/testimonial", function(req, res){
+
+	var formEntity = req.body.entityName;
+	var review = req.body.tmessage;
+
+	var testimonial = new tModel({
+
+		entity: formEntity,
+		text: review
+	});
+
+	testimonial.save(function(err, testimonial){
+		
+		if (err) return console.error(err);
+	});
+	
+	res.redirect("/");
 });
 
 app.listen(port, function(){
