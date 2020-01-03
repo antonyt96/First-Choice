@@ -4,22 +4,8 @@ var port = process.env.PORT ||3000;
 
 require('dotenv').config();
 
-const mongoose = require("mongoose");
-mongoose.connect('mongodb://localhost/testimonials', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-});
-const Schema = mongoose.Schema;
-const ObjectId = Schema.ObjectId;
- 
-const testiSchema = new Schema({
- 
-  entity: String,
-  text: String,
-
-});
-
-const tModel = mongoose.model('tModel', testiSchema);
+var MongoClient = require('mongodb').MongoClient;
+var url = process.env.MONGODB_URI;
 
 app.set("view engine", "ejs");
 var bodyParser = require("body-parser");
@@ -61,32 +47,28 @@ app.get("/gallery", function(req, res){
 
 app.get("/", function(req, res){
 	
-	tModel.find({}, function(err, test){
+	MongoClient.connect(url, function(err, db){
 
-		if (err){
-			console.log("ERROR!");
-		} else {
+		if (err) throw err;
 
-			res.render("home", {testimonials:test})
-		}
+		dbo=db.db('heroku_wtnrgw0f');
 
+		dbo.collection("testimonials").find({}).toArray(function(err, result){
+
+			if (err) throw err;
+
+			res.render("home", {testimonials: result})
+
+			db.close();
+		});
+
+		// res.render("home", {testimonials:testis})
 	});
 
+
+
 });
-// app.get("/home", function(req, res){
-	
-// 	tModel.find({}, function(err, test){
 
-// 		if (err){
-// 			console.log("ERROR!");
-// 		} else {
-
-// 			res.render("home", {testimonials:testimonials})
-// 		}
-
-// 	});
-
-// });
 app.get("/services", function(req, res){
 
 		res.render("services");
@@ -136,17 +118,33 @@ app.post("/testimonial", function(req, res){
 
 	var formEntity = req.body.entityName;
 	var review = req.body.tmessage;
+	MongoClient.connect(url, function(err, db){
 
-	var testimonial = new tModel({
+		if (err) throw err;
 
-		entity: formEntity,
-		text: review
-	});
+		dbo=db.db('heroku_wtnrgw0f');
 
-	testimonial.save(function(err, testimonial){
+		var testimonialobj = {entity: formEntity, text: review};
+
+		dbo.collection("testimonials").insertOne(testimonialobj, function(err, res){
+
+			if (err) throw err;
+				console.log("1 document inserted");
+			db.close();
+		});
 		
-		if (err) return console.error(err);
 	});
+
+	// var testimonial = new tModel({
+
+	// 	entity: formEntity,
+	// 	text: review
+	// });
+
+	// testimonial.save(function(err, testimonial){
+		
+	// 	if (err) return console.error(err);
+	// });
 	
 	res.redirect("/");
 });
